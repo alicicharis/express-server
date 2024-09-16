@@ -23,9 +23,9 @@ services:
       - caddy_config:/config
     networks:
       - express-network
-  depends_on:
-    - express-server
-  restart: always
+    depends_on:
+      - express-server
+    restart: always
 
 networks:
   express-network:
