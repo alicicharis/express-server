@@ -7,4 +7,30 @@ services:
       - "3000:3000"
     environment:
       - NODE_ENV=production
+    networks:
+      - express-network
     restart: always
+
+  caddy:
+    image: caddy/caddy:latest
+    container_name: caddy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+    networks:
+      - express-network
+  depends_on:
+    - express-server
+  restart: always
+
+networks:
+  express-network:
+    driver: bridge
+
+volumes:
+  caddy_data:
+  caddy_config:
