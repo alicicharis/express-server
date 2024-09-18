@@ -2,35 +2,31 @@ services:
   express-server:
     build:
       context: .
-    container_name: express-server
-    ports:
-      - "3000:3000"
+    env_file:
+      - .env
     environment:
       - NODE_ENV=production
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
     networks:
       - express-network
     restart: always
 
-  caddy:
-    image: caddy/caddy:latest
-    container_name: caddy
-    ports:
-      - "80:80"
-      - "443:443"
+  nginx:
+    image: nginx:latest
+    container_name: nginx
     volumes:
-      - ./Caddyfile:/etc/caddy/Caddyfile
-      - caddy_data:/data
-      - caddy_config:/config
+      - ./conf.d:/etc/nginx/conf.d
+    ports:
+      - "3000:3000"
     networks:
       - express-network
     depends_on:
       - express-server
-    restart: always
 
 networks:
   express-network:
     driver: bridge
-
-volumes:
-  caddy_data:
-  caddy_config:
