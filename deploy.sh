@@ -2,6 +2,10 @@ reload_nginx() {
   docker exec nginx /usr/sbin/nginx -s reload  
 }
 
+reload_caddy() {
+  docker exec caddy caddy reload --config /etc/caddy/Caddyfile
+}
+
 zero_downtime_deploy() {  
   service_name=express-server
   old_container_id=$(docker ps -f name=$service_name -q | tail -n1)
@@ -40,7 +44,8 @@ while true; do
 done
   echo "New container is available"
   # start routing requests to the new container (as well as the old)  
-  reload_nginx
+  # reload_nginx
+  reload_caddy
 
   echo "Routing requests to the new container"
   # take the old container offline  
@@ -52,7 +57,8 @@ done
 
   echo "Taking the old container offline"
   # stop routing requests to the old container  
-  reload_nginx  
+  # reload_nginx  
+  reload_caddy
 }
 
 zero_downtime_deploy

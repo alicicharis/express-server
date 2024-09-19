@@ -17,7 +17,7 @@ const app = express();
 const port = 3000;
 
 app.get("/health", (req: Request, res: Response) => {
-  res.json({ status: "API up and running", hostname: os.hostname() });
+  res.json({ status: "Updated API up and running", hostname: os.hostname() });
 });
 
 app.get("/", async (req: Request, res: Response) => {
@@ -30,21 +30,21 @@ app.get("/", async (req: Request, res: Response) => {
 
   console.log("ENV DB URL: ", process.env.DATABASE_URL);
   let data;
-  try {
-    const sql = postgres({
-      user: "yourusername",
-      host: "db",
-      database: "yourdatabase",
-      password: "yourpassword",
-      port: 5432,
-    });
+  // try {
+  //   const sql = postgres({
+  //     user: "yourusername",
+  //     host: "db",
+  //     database: "yourdatabase",
+  //     password: "yourpassword",
+  //     port: 5432,
+  //   });
 
-    data = await sql`SELECT NOW();`;
+  //   data = await sql`SELECT NOW();`;
 
-    console.log("Data: ", data);
-  } catch (err) {
-    console.log("This error: ", err);
-  }
+  //   console.log("Data: ", data);
+  // } catch (err) {
+  //   console.log("This error: ", err);
+  // }
 
   res.json({
     message: "Deployment again successfull" + data,

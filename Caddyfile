@@ -1,3 +1,5 @@
-api.harislearn.com {
-  reverse_proxy express-server:3000
+:80 {
+    reverse_proxy express-server:3000 {
+      lb_policy round_robin
+    }
 }
