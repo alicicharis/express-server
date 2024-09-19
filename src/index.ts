@@ -28,6 +28,7 @@ app.get("/", async (req: Request, res: Response) => {
   // console.log(response.rows[0].message); // Hello world!
   // await client.end();
 
+  console.log("ENV DB URL: ", process.env.DATABASE_URL);
   let data;
   try {
     const sql = postgres({
