@@ -3,7 +3,7 @@ docker run -it --rm --name certbot \
   -v "$(pwd)/certbot/www:/var/www/certbot" \
   certbot/certbot certonly --webroot \
   --webroot-path=/var/www/certbot \
-  --email haris.alicic1@example.com \
+  --register-unsafely-without-email \
   --agree-tos \
   --no-eff-email \
   -d api.harislearn.com
