@@ -13,11 +13,14 @@ zero_downtime_deploy() {
   # bring a new container online, running new code  
   # (nginx continues routing to the old container only)  
   echo "Bringing a new container online"
-  docker-compose up -d --no-deps --scale $service_name=2 --no-recreate $service_name --build
+  docker compose up -d --no-deps --scale $service_name=2 --no-recreate $service_name --build
 
-CONTAINERS=$(docker-compose ps -q $service_name)
+CONTAINERS=$(docker compose ps -q $service_name)
 CONTAINER_1=$(echo $CONTAINERS | cut -d' ' -f1)
 CONTAINER_2=$(echo $CONTAINERS | cut -d' ' -f2)
+
+echo "Container 1" . $CONTAINER_1
+echo "Container 2" . $CONTAINER_2
 
 echo "Waiting for the second container to be healthy..."
 
@@ -53,7 +56,7 @@ done
   docker rm $old_container_id
 
   echo "Taking the old container offline"
-  docker-compose up -d --no-deps --scale $service_name=1 --no-recreate $service_name
+  docker compose up -d --no-deps --scale $service_name=1 --no-recreate $service_name
 
   echo "Taking the old container offline"
   # stop routing requests to the old container  
