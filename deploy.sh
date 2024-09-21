@@ -35,6 +35,7 @@ while true; do
             break
         else
             # If it has a health check, wait for it to be healthy
+            echo "Else for health check: " $CONTAINER_2
             HEALTH=$(docker inspect --format='{{.State.Health.Status}}' $CONTAINER_2)
             if [ "$HEALTH" = "healthy" ]; then
                 echo "Container is running and healthy."
